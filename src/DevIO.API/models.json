@@ -1,0 +1,33 @@
+[
+  {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "nome": null,
+    "documento": null,
+    "tipoFornecedor": 0,
+    "endereco": null,
+    "ativo": false
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "logradouro": null,
+    "numero": null,
+    "complemento": null,
+    "bairro": null,
+    "cep": null,
+    "cidade": null,
+    "estado": null,
+    "fornecedorId": "00000000-0000-0000-0000-000000000000"
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "fornecedorId": "00000000-0000-0000-0000-000000000000",
+    "nome": null,
+    "descricao": null,
+    "imagemUpload": null,
+    "imagem": null,
+    "valor": 0.0,
+    "dataCadastro": "0001-01-01T00:00:00",
+    "ativo": false,
+    "nomeFornecedor": null
+  }
+]

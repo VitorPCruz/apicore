@@ -1,22 +1,28 @@
 using DevIO.API.Configuration;
 using DevIO.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
+#region Builder
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<MeuDbContext>(
     options => options.UseSqlServer(connection));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => 
+        options.JsonSerializerOptions
+            .ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 builder.Services.ResolveDependencies();
 builder.Services.AddAutoMapper(typeof(Program));
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+#endregion
+
+#region App
 
 var app = builder.Build();
 
@@ -34,3 +40,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+#endregion
