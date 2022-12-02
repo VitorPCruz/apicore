@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using DevIO.Business.Models;
 
-namespace DevIO.Business.Intefaces
+namespace DevIO.Business.Interfaces
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : Entity
     {

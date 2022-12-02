@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using DevIO.Business.Intefaces;
+using DevIO.Business.Interfaces;
 using DevIO.Business.Models;
 using DevIO.Data.Context;
 using Microsoft.EntityFrameworkCore;

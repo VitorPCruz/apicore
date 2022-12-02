@@ -1,4 +1,4 @@
-﻿using DevIO.Business.Intefaces;
+﻿using DevIO.Business.Interfaces;
 using DevIO.Business.Models;
 using DevIO.Business.Notificacoes;
 using FluentValidation;

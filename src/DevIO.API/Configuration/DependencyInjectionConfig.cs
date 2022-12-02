@@ -1,4 +1,4 @@
-﻿using DevIO.Business.Intefaces;
+﻿using DevIO.Business.Interfaces;
 using DevIO.Data.Context;
 using DevIO.Data.Repository;
 
