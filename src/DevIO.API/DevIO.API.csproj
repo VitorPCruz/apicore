@@ -20,6 +20,10 @@
 		<ProjectReference Include="..\DevIO.Business\DevIO.Business.csproj" />
 		<ProjectReference Include="..\DevIO.Data\DevIO.Data.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\imagens\" />
+	</ItemGroup>
 	
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
