@@ -17,7 +17,8 @@ namespace DevIO.API.Controllers
         public ProdutosController(INotificador notificador,
                                   IProdutoRepository produtoRepository,
                                   IProdutoService produtoService,
-                                  IMapper mapper) : base(notificador) {
+                                  IMapper mapper) : base(notificador)
+        {
             _produtoRepository = produtoRepository;
             _produtoService = produtoService;
             _mapper = mapper;
@@ -47,11 +48,67 @@ namespace DevIO.API.Controllers
             if (!UploadArquivo(produtoViewModel.ImagemUpload, imagemNome)) return CustomResponse(produtoViewModel);
 
             produtoViewModel.Imagem = imagemNome;
-             
+
             await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoViewModel));
 
             return CustomResponse(produtoViewModel);
         }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Atualizar(Guid id, ProdutoViewModel produtoViewModel)
+        {
+            if (id != produtoViewModel.Id)
+            {
+                NotificarErro("Os IDs informados não são os mesmos");
+                return NotFound(); 
+            }
+
+            var produtoAtualizacao = await ObterProduto(id);
+            produtoViewModel.Imagem = produtoAtualizacao.Imagem;
+
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            if (produtoViewModel.ImagemUpload != null)
+            {
+                var imagemNome = Guid.NewGuid() + "_" + produtoViewModel.Imagem;
+
+                if (!UploadArquivo(produtoViewModel.ImagemUpload, imagemNome))
+                    return CustomResponse(ModelState);
+
+                produtoAtualizacao.Imagem = imagemNome;
+            }
+
+            produtoAtualizacao.Nome = produtoViewModel.Nome;
+            produtoAtualizacao.Descricao = produtoViewModel.Descricao;
+            produtoAtualizacao.Valor = produtoViewModel.Valor;
+            produtoAtualizacao.Ativo = produtoViewModel.Ativo;
+
+            await _produtoService.Atualizar(
+                _mapper.Map<Produto>(produtoViewModel));
+
+            return CustomResponse(produtoViewModel);
+        }
+
+        [HttpPost("adicionar-alternativo")]
+        public async Task<ActionResult<ProdutoViewModel>> AdicionarAlternativo(ProdutoImagemViewModel produtoViewModel)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            var imgPrefixo = Guid.NewGuid() + "_";
+
+            if (!await UploadArquivoAlternativo(produtoViewModel.ImagemUpload, imgPrefixo))
+                CustomResponse(ModelState);
+
+            produtoViewModel.Imagem = imgPrefixo + produtoViewModel.ImagemUpload.FileName;
+
+            await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoViewModel));
+
+            return CustomResponse(produtoViewModel);
+        }
+
+        [RequestSizeLimit(41943040)]
+        [HttpPost("imagem")]
+        public async Task<ActionResult> AdicionarImagem(IFormFile file) => Ok(file);
 
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ProdutoViewModel>> Excluir(Guid id)
@@ -75,7 +132,7 @@ namespace DevIO.API.Controllers
                 return false;
             }
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imgNome);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/app/src/assets/", imgNome);
 
             if (System.IO.File.Exists(filePath))
             {
@@ -84,6 +141,30 @@ namespace DevIO.API.Controllers
             }
 
             System.IO.File.WriteAllBytes(filePath, imageDataByteArray);
+
+            return true;
+        }
+
+        private async Task<bool> UploadArquivoAlternativo(IFormFile arquivo, string imgNome)
+        {
+            if (arquivo == null || arquivo.Length == 0)
+            {
+                NotificarErro("Forneça uma imagem para este produto.");
+                return false;
+            }
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+                "wwwroot/app/src/assets/",
+                imgNome + arquivo.FileName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                NotificarErro("Já existe um arquivo com este nome!");
+                return false;
+            }
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+                await arquivo.CopyToAsync(stream);
 
             return true;
         }

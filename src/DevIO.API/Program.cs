@@ -17,15 +17,8 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions
             .ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-    options.SuppressModelStateInvalidFilter = true);
 
-builder.Services.AddCors(options =>
-    options.AddPolicy("Development",
-        builder => builder.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader())
-);
+builder.Services.WebApiConfig();
 
 builder.Services.ResolveDependencies();
 
@@ -37,19 +30,18 @@ builder.Services.AddSwaggerGen();
 #endregion
 
 #region App
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseCors("Development");
+    app.UseMvcConfiguration();
+
     app.UseDeveloperExceptionPage();
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
