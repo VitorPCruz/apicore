@@ -6,16 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\DevIO.Business\DevIO.Business.csproj" />
 		<ProjectReference Include="..\DevIO.Data\DevIO.Data.csproj" />
@@ -25,6 +15,26 @@
 	  <Folder Include="Extensions\" />
 	  <Folder Include="wwwroot\app\src\NewFolder\" />
 	  <Folder Include="wwwroot\imagens\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.9" />
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.9" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
 	</ItemGroup>
 	
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>

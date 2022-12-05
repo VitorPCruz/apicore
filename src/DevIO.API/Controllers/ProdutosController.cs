@@ -2,6 +2,7 @@
 using DevIO.API.ViewModels;
 using DevIO.Business.Interfaces;
 using DevIO.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.AccessControl;
 
@@ -24,10 +25,12 @@ namespace DevIO.API.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IEnumerable<ProdutoViewModel>> ObterTodos() => _mapper.Map<IEnumerable<ProdutoViewModel>>(
                 await _produtoRepository.ObterProdutosFornecedores());
 
+        [AllowAnonymous]
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<ProdutoViewModel>> ObterPorId(Guid id)
         {

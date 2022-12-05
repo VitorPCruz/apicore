@@ -12,6 +12,8 @@ var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<MeuDbContext>(
     options => options.UseSqlServer(connection));
 
+builder.Services.AddIdentityConfiguration(builder.Configuration);
+
 builder.Services.AddControllers()
     .AddJsonOptions(options => 
         options.JsonSerializerOptions
@@ -32,6 +34,9 @@ builder.Services.AddSwaggerGen();
 #region App
 var app = builder.Build();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMvcConfiguration();
@@ -42,7 +47,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthorization();
 app.MapControllers();
 app.Run();
 #endregion

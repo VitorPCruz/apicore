@@ -1,5 +1,6 @@
 using DevIO.Business.Interfaces;
 using DevIO.Business.Notificacoes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
