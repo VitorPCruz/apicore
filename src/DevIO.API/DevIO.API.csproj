@@ -12,7 +12,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Extensions\" />
 	  <Folder Include="wwwroot\app\src\NewFolder\" />
 	  <Folder Include="wwwroot\imagens\" />
 	</ItemGroup>
