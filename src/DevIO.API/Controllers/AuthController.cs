@@ -76,7 +76,7 @@ namespace DevIO.API.Controllers
             return CustomResponse(loginUser);
         }
 
-        private async Task<string> GerarJWT(string email)
+        private async Task<LoginResponseViewModel> GerarJWT(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             var claims = await _userManager.GetClaimsAsync(user);
@@ -107,7 +107,23 @@ namespace DevIO.API.Controllers
             });
 
             var encodedToken = tokenHandler.WriteToken(token);
-            return encodedToken;
+
+            var response = new LoginResponseViewModel
+            {
+                AccessToken = encodedToken,
+                ExpiresInHours = TimeSpan.FromHours(_appSettings.ExpiracaoHoras).TotalSeconds / 60 / 60,
+                UserToken = new UserTokenViewModel { 
+                    Id = user.Id,
+                    Email = user.Email,
+                    Claims = claims.Select(claim => new ClaimViewModel
+                    { 
+                        Type = claim.Type,
+                        Value = claim.Value,
+                    })
+                }
+            };
+
+            return response;
         }
 
         private static long ToUnixEpochDate(DateTime date)
