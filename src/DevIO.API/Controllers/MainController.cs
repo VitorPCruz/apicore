@@ -1,14 +1,13 @@
 using DevIO.Business.Interfaces;
 using DevIO.Business.Notificacoes;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Reflection.Metadata.Ecma335;
 
 namespace DevIO.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public abstract class MainController : ControllerBase
     {
         private readonly INotificador _notificador;

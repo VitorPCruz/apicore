@@ -1,4 +1,5 @@
-﻿using DevIO.API.Extensions;
+﻿using DevIO.API.Controllers;
+using DevIO.API.Extensions;
 using DevIO.API.ViewModels;
 using DevIO.Business.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace DevIO.API.Controllers
+namespace DevIO.API.V1.Controllers
 {
     [Route("api")]
     public class AuthController : MainController

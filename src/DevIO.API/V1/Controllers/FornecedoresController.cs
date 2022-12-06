@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DevIO.API.Controllers;
 using DevIO.API.Extensions;
 using DevIO.API.ViewModels;
 using DevIO.Business.Interfaces;
@@ -6,7 +7,7 @@ using DevIO.Business.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DevIO.API.Controllers
+namespace DevIO.API.V1.Controllers
 {
     [Authorize]
     public class FornecedoresController : MainController
@@ -29,6 +30,7 @@ namespace DevIO.API.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FornecedorViewModel>>> ObterTodos() =>
             Ok(_mapper.Map<IEnumerable<FornecedorViewModel>>(
