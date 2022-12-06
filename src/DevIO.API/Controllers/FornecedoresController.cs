@@ -20,7 +20,8 @@ namespace DevIO.API.Controllers
                                       IEnderecoRepository enderecoRepository, 
                                       IFornecedorService fornecedorService, 
                                       IMapper mapper, 
-                                      INotificador notificador) : base(notificador)
+                                      IUser user,
+                                      INotificador notificador) : base(notificador, user)
         {
             _fornecedorRepository = fornecedorRepository;
             _enderecoRepository = enderecoRepository;
@@ -29,13 +30,9 @@ namespace DevIO.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FornecedorViewModel>>> ObterTodos()
-        {
-            var fornecedores = _mapper.Map<IEnumerable<FornecedorViewModel>>(
-                await _fornecedorRepository.ObterTodos());
-
-            return Ok(fornecedores);
-        }
+        public async Task<ActionResult<IEnumerable<FornecedorViewModel>>> ObterTodos() =>
+            Ok(_mapper.Map<IEnumerable<FornecedorViewModel>>(
+                await _fornecedorRepository.ObterTodos()));
 
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<FornecedorViewModel>> ObterPorId(Guid id)
@@ -110,16 +107,10 @@ namespace DevIO.API.Controllers
             return CustomResponse(fornecedorViewModel);
         }
 
-        private async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id)
-        {
-            return _mapper.Map<FornecedorViewModel>(
-                await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
-        }
+        private async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id) => 
+            _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
 
-        private async Task<FornecedorViewModel> ObterFornecedorEndereco(Guid id)
-        {
-            return _mapper.Map<FornecedorViewModel>(
-                await _fornecedorRepository.ObterFornecedorEndereco(id));
-        }
+        private async Task<FornecedorViewModel> ObterFornecedorEndereco(Guid id) => 
+            _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorEndereco(id));
     }
 }
