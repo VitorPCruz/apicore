@@ -1,4 +1,5 @@
-﻿using DevIO.Business.Interfaces;
+﻿using DevIO.API.Extensions;
+using DevIO.Business.Interfaces;
 using DevIO.Business.Notificacoes;
 using DevIO.Business.Services;
 using DevIO.Data.Context;
@@ -19,6 +20,9 @@ namespace DevIO.API.Configuration
 
             services.AddScoped<IFornecedorService, FornecedorService>();
             services.AddScoped<IProdutoService, ProdutoService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUser, AspNetUser>();
 
             return services;
         }

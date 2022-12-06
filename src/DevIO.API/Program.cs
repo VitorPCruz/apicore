@@ -47,6 +47,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHsts();
 app.MapControllers();
 app.Run();
 #endregion
