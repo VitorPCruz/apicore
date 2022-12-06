@@ -19,14 +19,10 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions
             .ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-
 builder.Services.WebApiConfig();
-
 builder.Services.ResolveDependencies();
-
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen();
 
 #endregion
@@ -39,12 +35,19 @@ app.UseAuthorization();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseCors("Development");
+
     app.UseMvcConfiguration();
 
     app.UseDeveloperExceptionPage();
 
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    //app.UseCors("Production");
+
 }
 
 app.UseHsts();

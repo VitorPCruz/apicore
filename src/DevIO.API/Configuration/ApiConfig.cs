@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 
 namespace DevIO.API.Configuration
 {
@@ -10,17 +11,32 @@ namespace DevIO.API.Configuration
                 options.SuppressModelStateInvalidFilter = true);
 
             services.AddCors(options =>
+            {
                 options.AddPolicy("Development",
                     builder => builder.AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader())
-            );
+                        .AllowAnyHeader());
+
+                /*  
+                options.AddDefaultPolicy(
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+
+                options.AddPolicy("Production",
+                    builder => builder.WithMethods("GET")
+                        .WithOrigins("http://localhost")
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .WithHeaders(HeaderNames.ContentType, "x-custom-header")
+                        .AllowAnyHeader());
+                */
+            });
             return services;
         }
 
         public static IApplicationBuilder UseMvcConfiguration(this IApplicationBuilder app)
         {
-            app.UseCors("Development");
             app.UseHttpsRedirection();
             return app;
         }
